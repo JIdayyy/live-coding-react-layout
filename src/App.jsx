@@ -1,25 +1,16 @@
-import axios from "axios";
-import { useEffect, useState } from "react";
-import QuoteList from "./components/QuoteList";
+import { useState } from "react";
+import Layout from "./components/Layout";
+import About from "./pages/About";
+import Home from "./pages/Home";
 
 function App() {
-  const [data, setData] = useState([]);
-
-  const getDataFromApi = async () => {
-    const response = await axios.get(
-      "https://thesimpsonsquoteapi.glitch.me/quotes?count=5"
-    );
-    setData(response.data);
-  };
-
-  useEffect(() => {
-    getDataFromApi();
-  }, []);
+  const [currentPage, setCurrentPage] = useState("HOME");
 
   return (
-    <div>
-      <QuoteList quoteList={data} />
-    </div>
+    <Layout setCurrentPage={setCurrentPage}>
+      {currentPage === "HOME" && <Home />}
+      {currentPage === "ABOUT" && <About />}
+    </Layout>
   );
 }
 
